@@ -1,0 +1,10 @@
+/Users/borakasmer/coreSignalrPrivate/bin/Debug/netcoreapp2.0/coreSignalrPrivate.deps.json
+/Users/borakasmer/coreSignalrPrivate/bin/Debug/netcoreapp2.0/coreSignalrPrivate.runtimeconfig.json
+/Users/borakasmer/coreSignalrPrivate/bin/Debug/netcoreapp2.0/coreSignalrPrivate.runtimeconfig.dev.json
+/Users/borakasmer/coreSignalrPrivate/bin/Debug/netcoreapp2.0/coreSignalrPrivate.dll
+/Users/borakasmer/coreSignalrPrivate/bin/Debug/netcoreapp2.0/coreSignalrPrivate.pdb
+/Users/borakasmer/coreSignalrPrivate/obj/Debug/netcoreapp2.0/coreSignalrPrivate.csproj.CoreCompileInputs.cache
+/Users/borakasmer/coreSignalrPrivate/obj/Debug/netcoreapp2.0/coreSignalrPrivate.AssemblyInfoInputs.cache
+/Users/borakasmer/coreSignalrPrivate/obj/Debug/netcoreapp2.0/coreSignalrPrivate.AssemblyInfo.cs
+/Users/borakasmer/coreSignalrPrivate/obj/Debug/netcoreapp2.0/coreSignalrPrivate.dll
+/Users/borakasmer/coreSignalrPrivate/obj/Debug/netcoreapp2.0/coreSignalrPrivate.pdb

@@ -1,0 +1,102 @@
+﻿@using Microsoft.AspNetCore.Http;
+<script src="~/scripts/signalr-client-1.0.0-alpha2-final.min.js"></script>  
+<script src="~/scripts/jquery.min.js"></script>   
+<script>
+    let connection = new signalR.HubConnection('background');
+    connection.on('SetConnectionId', data => {
+                $("#hdnConnectionID").val(data);
+                $("#hdnUserName").val('@Context.Session.GetString("UserName")');
+                console.log($("#hdnUserName").val());
+                console.log("ConnectionID : "+data);
+                
+                connection.invoke('AddUserList', $("#hdnUserName").val(),data);
+        }); 
+
+        /*connection.on('Close', data =>{
+                   var popup = window.open(location, '_self', '');
+                   popup.close();
+        });*/
+
+        connection.on('ChangeImage', data => {
+                    $('#pictureDiv').css('background-image',"url(/images/" + data + ".jpg)");
+        });
+
+        connection.on('SetListDisconnect', data => {
+            if(jQuery.isEmptyObject(data)){
+                return window.location.href ="/Home/Index";
+            }            
+            else
+            {
+                var haskey=false;
+                $.each(data,function(key, value) 
+                {
+                    console.log("Key="+key.toUpperCase());
+                    console.log("name="+$("#hdnUserName").val().toUpperCase());
+                    if($("#hdnUserName").val().toUpperCase()==key.toUpperCase()){
+                        haskey=true
+                    }
+                });
+                if(haskey==false){
+                    return window.location.href ="/Home/Index";
+                }
+            }
+            $('#selectUser').empty();
+            $.each(data,function(key, value) 
+            {               
+                $('#selectUser').append('<option value=' + value + '>' + key + '</option>');
+            });
+            console.log(JSON.stringify(data));
+        });
+        connection.on('SetList', data => {            
+            $('#selectUser').empty();
+            $.each(data,function(key, value) 
+            {               
+                $('#selectUser').append('<option value=' + value + '>' + key + '</option>');
+            });
+            console.log(JSON.stringify(data));
+        });
+        connection.start();
+        $(document).ready(function () {
+            	$(".img-check").click(function(){
+                    connection.invoke('ChangeBackground', $("#selectUser").val(),$(this).attr("alt"));
+                    console.log($(this).attr("alt"));
+				    $(this).toggleClass("check");
+			});
+        });
+</script>
+<style>
+    .check
+    {
+        opacity:0.5;
+	    color:#996;	
+    }
+    select{
+        font-size:25px;
+    }
+</style>
+<div class="container">
+    <div class="jumbotron">
+       <h2 style="text-align:center">@Html.Raw('@')@Context.Session.GetString("UserName") Profil Sayfası</h2>
+    </div>
+    <hr>
+    <table>
+        <tr>
+            <td>
+                <h3>Gönderilecek Kişi:</h3>
+                <select id="selectUser"></select>
+                <input type="hidden" id="hdnUserName" />
+                <input type="hidden" id="hdnConnectionID" />
+            </td>            
+            <td style="padding-left: 50px">
+                <h3>Arka Resimler :</h3>
+                <div class="form-group">	                 
+                    <div class="col-md-3"><label class="btn btn-primary"><img src="~/images/painting.jpg"  class="img-thumbnail img-check" width="100" height="50" alt="painting"><input type="checkbox" name="painting" id="painting" value="painting" class="hidden" autocomplete="off"></label></div>
+                    <div class="col-md-3"><label class="btn btn-primary"><img src="~/images/Oldmans.jpg" class="img-thumbnail img-check" width="100" height="50" alt="oldmans"><input type="checkbox" name="oldmans" id="oldmans" value="oldmans" class="hidden" autocomplete="off"></label></div>                    
+                    <div class="col-md-3"><label class="btn btn-primary"><img src="~/images/SeeView.jpg"  class="img-thumbnail img-check" width="100" height="50" alt="seeView"><input type="checkbox" name="seeview" id="seeView" value="seeView" class="hidden" autocomplete="off"></label></div>
+                    <div class="col-md-3"><label class="btn btn-primary"><img src="~/images/Picnic.jpg"  class="img-thumbnail img-check" width="100" height="50" alt="picnic"><input type="checkbox" name="picnic" id="picnic" value="picnic" class="hidden" autocomplete="off"></label></div>
+                </div>          
+            </td>
+        </tr>
+    </table>
+    <div id="pictureDiv" style="width:1000px; height:500px; background-size: 1000px 500px" ></div>
+</div>

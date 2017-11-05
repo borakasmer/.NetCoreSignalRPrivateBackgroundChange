@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LogIn</title>
+    <script src="~/scripts/jquery.min.js"></script>   
+    <script>
+        $(document).ready(function () {
+            $("#btnSubmit").click(function () {
+                $.post("/Home/Login",
+                {
+                    name: $("#userName").val(),
+                }, function (result) {
+                    if (result != "Error") {
+                        location.href = "/Home/Index";
+                    }
+                    else {
+                        alert("Bu Nicke'de Bir Kullanıcı Vardır.");
+                    }
+                });
+            });
+            $("#userName").focus();
+        });
+ 
+        function pushEnter(event) {
+            if (event.which == 13) {
+                $('#btnSubmit').click();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-5 col-md-3">
+                <div class="form-login">
+                    <h3>Private Background</h3>
+                    <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="Kullanıcı Adı Giriniz" onkeydown="pushEnter(event)" />
+                    <br />
+                    <div class="wrapper">
+                        <span class="group-btn">
+                            <a href="#" class="btn btn-primary btn-md" id="btnSubmit">Giriş Yapınız <i class="fa fa-sign-in"></i></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
